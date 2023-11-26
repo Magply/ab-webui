@@ -1,0 +1,18 @@
+---
+- name: Setup rsyslog to send logs remotly
+  template:
+    src: 70-output.conf.j2
+    dest: /etc/rsyslog.d/70-output.conf
+    owner: root
+    mode: 0644
+  notify:
+    - restart rsyslog
+
+- name: Setup rsyslog to format logs to json
+  template:
+    src: 01-json-template.conf.j2
+    dest: /etc/rsyslog.d/01-json-template.conf
+    owner: root
+    mode: 0644
+  notify:
+    - restart rsyslog

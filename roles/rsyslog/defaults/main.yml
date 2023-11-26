@@ -1,0 +1,16 @@
+---
+#
+logstash_host: 172.10.10.12
+logstash_port: 10514
+
+rsyslog_workdir: /var/spool/rsyslog
+
+rsyslog_owner: root
+rsyslog_group: adm
+rsyslog_filemode: 0644
+rsyslog_dirmode: 0644
+rsyslog_umask: 0022
+
+rsyslog_modules:
+  - imuxsock
+  - imklog

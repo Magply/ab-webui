@@ -1,0 +1,13 @@
+---
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Start and enable ntp
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+
+- name: Daily sync
+  shell: crontab -l | { cat; echo "@daily /usr/sbin/ntpdate 2.by.pool.ntp.org"; } | crontab -

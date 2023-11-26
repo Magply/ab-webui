@@ -1,0 +1,29 @@
+---
+- name: Install nginx
+  package:
+    name: nginx
+    state: present
+
+- name: Copy nginx configuration.
+  template:
+    src: "nginx.conf.j2"
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy Kibana page
+  template:
+    src: "default.j2"
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: 644
+  notify:
+    - restart nginx
+
+- name: Ensure nginx is started and enabled at boot.
+  service:
+    name: nginx
+    state: started
+    enabled: true

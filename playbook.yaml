@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - role: apt
+      apt_install: [ntp, tzdata, ntpdate, monit]
+    - ntp
+    - monit
+    - rsyslog
+    - kibana
+    - nginx
+
+  tasks:
+    - name: Get virtual machine id
+      shell: ps -e | grep "VBox" | awk 'NR==1{print $1}'
+      register: unique_id
+    - name: Create final ini file
+      ini_file:
+        dest: /etc/ab-webui-ini
+        section: general
+        option: uniqueID
+        value: "{{unique_id.stdout}}"
+        mode: 0600
